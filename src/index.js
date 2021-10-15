@@ -28,28 +28,29 @@ class MyGame extends Phaser.Scene
         this.obstacles = this.physics.add.group();
 
         let obstacleTopY = (scale * 16 / 2);
-        let obstacleBottomY = (scale * 16 / 2) + (this.canvas.height / 2 + 64)
-        this.obstacles.create(this.canvas.width + 256, obstacleTopY, 'obstacle').setScale(4, scale);
-        this.obstacles.create(this.canvas.width + 256, obstacleBottomY, 'obstacle').setScale(4, scale);
-        this.obstacles.create(this.canvas.width + 512, obstacleTopY, 'obstacle').setScale(4, scale);
-        this.obstacles.create(this.canvas.width + 512, obstacleBottomY, 'obstacle').setScale(4, scale);
-        this.obstacles.create(this.canvas.width + 768, obstacleTopY, 'obstacle').setScale(4, scale);
-        this.obstacles.create(this.canvas.width + 768, obstacleBottomY, 'obstacle').setScale(4, scale);
+        let obstacleBottomY = (scale * 16 / 2) + (this.canvas.height / 2 + 56)
+        this.obstacles.create(this.canvas.width + 576, obstacleTopY, 'obstacle').setScale(4, scale);
+        this.obstacles.create(this.canvas.width + 576, obstacleBottomY, 'obstacle').setScale(4, scale);
+        this.obstacles.create(this.canvas.width + 800, obstacleTopY, 'obstacle').setScale(4, scale);
+        this.obstacles.create(this.canvas.width + 800, obstacleBottomY, 'obstacle').setScale(4, scale);
+        this.obstacles.create(this.canvas.width + 1024, obstacleTopY, 'obstacle').setScale(4, scale);
+        this.obstacles.create(this.canvas.width + 1024, obstacleBottomY, 'obstacle').setScale(4, scale);
 
         this.winny = this.physics.add.sprite(50, this.canvas.height / 2, 'winny').setScale(2);
         this.winny.setCollideWorldBounds(true);
         this.winny.setGravityY(1000);
 
         this.cursors.space.on('down', () => {this.winny.setVelocityY(-300);});
-    }
 
-    update ()
-    {
         for (let index = 0, length = this.obstacles.getLength(); index < length; index++) {
             let obstacle = this.obstacles.getChildren()[index];
             obstacle.setVelocityX(-150);
         }
 
+    }
+
+    update ()
+    {   
         for (let index = 0, length = this.obstacles.getLength(); index < length; index++) {
             let obstacle = this.obstacles.getChildren()[index];
             let x = obstacle.body.x;
@@ -58,9 +59,16 @@ class MyGame extends Phaser.Scene
                 console.log(`Index ${index} Leading Position ${leadingPosition}`);
                 let leadingObstacle = this.obstacles.getChildren()[leadingPosition];
                 let leadingObstacleX = leadingObstacle.body.x;
-                obstacle.body.x = leadingObstacleX + 256;
+                obstacle.body.x = leadingObstacleX + 224;
             }
         }
+    }
+
+    createObstacle() {
+        let width = 64;
+        let spaceBetween = 56;
+        let topHeight = Math.floor( Math.random() * ( this.canvas.height * 3 / 4 ) );
+        let bottomHeight = this.canvas.height - ( topHeight + spaceBetween );
     }
 }
 
@@ -71,7 +79,6 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            // gravity: {y: 1000},
             fps: 60
         }
     },
